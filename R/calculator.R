@@ -4,13 +4,14 @@
 #'
 #' @param ss_policy A list containing parameters for social security policy. See
 #' 'Details'.
+#' @param earnings_history A data frame, with two columns: \code{wage} and
+#' \code{date}, recording the income paid in that year of an individual.
 #' @param retirement_age The age at which an individual retires. Must be larger
 #' than 62.
 #' @param retirement_year The year in which an individual retires.
 #' @param current_years A list of years in which to compute social security
 #' benefits.
 #' @param disability_status True if individual is on social security.
-#' @param spousal_status True if individual is married.
 #' @return Vector of monthly social security benefit earnings, per year in
 #' \code{current_year}.
 #' @details The policy parameters consist of a wage index, so-called 'bend
@@ -35,8 +36,7 @@ ss_benefits = function(ss_policy,
                        retirement_age,
                        retirement_year,
                        current_years,
-                       disability_status = NULL,
-                       spousal_status = NULL) {
+                       disability_status = NULL) {
 
   wage_index = ss_policy$wage_index
   bend_points = ss_policy$bend_points
@@ -47,6 +47,10 @@ ss_benefits = function(ss_policy,
   if (retirement_age < 62) {
     stop('Retirement age must be larger than 62.')
   }
+
+  # fill out earnings to have all dates
+  earnings_history = merge(expand.grid(date = seq(1951, 2017)), earnings_history, all = TRUE)
+  earnings_history$wage[is.na(earnings_history$wage)] = 0
 
   # find year of eligibility
   # year of eligibility the year turned 62
@@ -101,5 +105,8 @@ ss_benefits = function(ss_policy,
     return(round(pia_percentage[date == eligibility_year][[as.character(retirement_age)]] * pia_cola_return, 2))
   }))
 
-  return(insurance_benefits)
+  # TODO: more sophisticated spousal and child insurance
+  return(list(personal_insurance = insurance_benefits,
+              spousal_insurance = 0.5 * insurance_benefits,
+              child_insurance = 0.5 * insurance_benefits))
 }
