@@ -177,6 +177,5 @@ ss_benefits = function(ss_policy,
   }))
 
   return(list(personal_insurance = insurance_benefits,
-              family_insurance = 0.5 * insurance_benefits,
               maximum_family_benefits = maximum_family_benefits))
 }
