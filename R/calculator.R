@@ -86,7 +86,7 @@ ss_benefits = function(ss_policy,
     )
   if (retirement_age < 62)
     stop('Retirement age must be larger than 62.')
-  if (length(maximum_family_benefits_rates) != 4)
+  if (length(maximum_family_benefit_rates) != 4)
     stop('There should be 4 marginal rates in the maximum family benefits')
   if (length(pia_marginal_rates) != 3)
     stop('There should be 3 marginal rates in the computation of PIA')
