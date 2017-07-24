@@ -27,6 +27,7 @@
 #' returns default values in the correct format, using current social security
 #' administration policy as a guide. Load it with
 #' \code{data(ss_policy_defaults)}.
+#' @export
 ss_benefits = function(ss_policy,
                        individual_profile,
                        begin_year = 1951,

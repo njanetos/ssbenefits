@@ -6,24 +6,15 @@
 of earnings, retirement age, year in which they retired, and disability /
 household status.}
 \usage{
-ss_benefits(ss_policy, earnings_history, retirement_age, retirement_year,
-  current_years, disability_status = NULL, spousal_status = NULL)
+ss_benefits(ss_policy, individual_profile, begin_year = 1951,
+  end_year = 2100)
 }
 \arguments{
 \item{ss_policy}{A list containing parameters for social security policy. See
 'Details'.}
 
-\item{retirement_age}{The age at which an individual retires. Must be larger
-than 62.}
-
-\item{retirement_year}{The year in which an individual retires.}
-
-\item{current_years}{A list of years in which to compute social security
-benefits.}
-
-\item{disability_status}{True if individual is on social security.}
-
-\item{spousal_status}{True if individual is married.}
+\item{individual_profile}{A list containing the information about the
+individual for whom social security benefits will be computed.}
 }
 \value{
 Vector of monthly social security benefit earnings, per year in
@@ -45,12 +36,14 @@ security website, https://www.ssa.gov/oact/cola/Benefits.html. The
   (See here: https://www.ssa.gov/oact/cola/AWIgrowth.html.)}
   \item{\code{bend_points}: }{So-called 'bend points'.
   (See here: https://www.ssa.gov/oact/cola/bendpoints.html.)}
-  \item{\code{pia_percentages}: }{Discounts applied to benefits depending on age of
-retirement.}
-  \item{\code{cola_increases}: }{Annual cost of living increases applied to benefits.}
+  \item{\code{pia_percentages}: }{Discounts applied to benefits depending on
+  age of retirement.}
+  \item{\code{cola_increases}: }{Annual cost of living increases applied to
+  benefits.}
 }
 For formatting these inputs, see the data \code{ss_policy_defaults}, which
 returns default values in the correct format, using current social security
-administration policy as a guide. Load it with \code{data(ss_policy_defaults)}.
+administration policy as a guide. Load it with
+\code{data(ss_policy_defaults)}.
 }
 
